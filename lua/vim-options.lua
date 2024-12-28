@@ -11,6 +11,7 @@ vim.cmd("set smartindent")
 vim.cmd("set relativenumber")
 vim.cmd("syntax on")
 vim.cmd("set so=30")
+vim.cmd("set mouse=");
 
 vim.keymap.set({'i', 'v'}, 'jk', '<ESC>', {})
 vim.keymap.set({'i', 'v'}, 'kj', '<ESC>', {})

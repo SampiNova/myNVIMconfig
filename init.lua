@@ -15,7 +15,21 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
+local function get_args()
+    local args = vim.fn.argv()
+    if #args > 0 then
+        return args[1]
+    end
+end
 
-require("vim-options")
-require("lazy").setup("plugins")
+
+local arg = get_args()
+
+if arg == "text" then
+    require("vim-options.text")
+    require("lazy").setup("plugins.text")
+else
+    require("vim-options.code")
+    require("lazy").setup("plugins.code")
+end
 

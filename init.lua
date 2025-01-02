@@ -14,6 +14,39 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("vim-options")
-require("lazy").setup("plugins")
+local function setup_plugins()
+    local plugins = {}
+    local rtp = vim.o.rtp
+    local options = {}
+    
+    if string.find(rtp, "code") then
+       -- Загружаем опции vim для кода и плагины
+        local code_options = require("code.vim-options")
+         if code_options then options = code_options end
+        plugins = require("code.plugins")
+        
+    elseif string.find(rtp, "text") then
+         -- Загружаем опции vim для текста и плагины
+         local text_options = require("text.vim-options")
+         if text_options then options = text_options end
+        plugins = require("text.plugins")
+     else
+         options = {}
+         plugins = { -- плагины по умолчанию
+             {"wbthomason/packer.nvim"}
+        }
+     end
+
+     for k,v in pairs(options) do vim.opt[k] = v end
+
+    require("lazy").setup(plugins, {
+        defaults = {
+            lazy = true,
+        }
+    })
+end
+
+setup_plugins()
+
+require("core.vim-options")
 

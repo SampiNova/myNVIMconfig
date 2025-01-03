@@ -21,6 +21,8 @@ local choice = vim.fn.inputlist({
   "2) Code (default)"
 })
 
+require("vim-options.base")
+
 if choice == 1 then
     require("vim-options.text")
     require("lazy").setup("plugins.text")
